@@ -12,15 +12,21 @@ class LogStrategy implements Writter
         # code...
     }
 
+    public function success(string $message): void
+    {
+        $formatedMessage = 'Success: ' . $message . "\n";
+        $this->writter->success($formatedMessage);
+    }
+
     public function warning(string $message): void
     {
-        $formatedMessage = 'Warning: ' . $message . "\r\n";
+        $formatedMessage = 'Warning: ' . $message . "\n";
         $this->writter->warning($formatedMessage);
     }
 
     public function error(string $message): void
     {
-        $formatedMessage = 'Error: ' . $message . "\r\n";
+        $formatedMessage = 'Error: ' . $message . "\n";
         $this->writter->error($formatedMessage);
     }
 }

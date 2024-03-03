@@ -13,6 +13,11 @@ class MyLogger
         # code...
     }
 
+    public function success(string $message)
+    {
+        $this->writter->success($message);
+    }
+
     public function error(string $message)
     {
         $this->writter->error($message);

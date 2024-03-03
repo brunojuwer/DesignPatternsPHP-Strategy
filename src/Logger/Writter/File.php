@@ -13,6 +13,10 @@ class File implements Writter
         # code...
     }
 
+    public function success(string $message): void
+    {
+        $this->writeFile($message);
+    }
     public function warning(string $message): void
     {
         $this->writeFile($message);

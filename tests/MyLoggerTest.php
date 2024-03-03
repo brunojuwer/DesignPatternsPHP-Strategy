@@ -23,34 +23,55 @@ class MyLoggerTest extends PHPUnit\Framework\TestCase
 
          $this->fileLog = new MyLogger(
             new LogStrategy(
-                new File('.', 'logs.txt')
+                new File('.', 'logs')
             )
         );
     }
 
     public function tearDown(): void
     {
-        if (file_exists('logs.txt')) {
-            unlink('logs.txt');
+        if (file_exists('logs')) {
+            unlink('logs');
         }
     }
+
+    public function testClassLoggerShouldLogSuccessInConsole()
+    {
+        $message = 'Olá mundo via logger';
+        
+        $this->expectOutputString("Success: Olá mundo via logger\n");
+
+        $this->consoleLog->success($message);
+    }
+
 
     public function testClassLoggerShouldLogErrorInConsole()
     {
         $message = 'Olá mundo via logger';
         
-        $this->expectOutputString("Error: Olá mundo via logger\r\n");
+        $this->expectOutputString("Error: Olá mundo via logger\n");
 
         $this->consoleLog->error($message);
     }
+
 
     public function testClassLoggerShouldLogWarningInConsole()
     {
         $message = 'Olá mundo via logger';
         
-        $this->expectOutputString("Warning: Olá mundo via logger\r\n");
+        $this->expectOutputString("Warning: Olá mundo via logger\n");
 
         $this->consoleLog->warning($message);
+    }
+
+
+    public function testClassLoggerShouldLogSuccessInFile()
+    {
+        $message = 'Olá mundo via arquivo';
+
+        $this->fileLog->success($message);
+
+        $this->assertFileEquals('fixtures/log_success', 'logs');
     }
 
     public function testClassLoggerShouldLogErrorInFile()
@@ -59,7 +80,7 @@ class MyLoggerTest extends PHPUnit\Framework\TestCase
 
         $this->fileLog->error($message);
 
-        $this->assertFileEquals('fixtures/log_error.txt', 'logs.txt');
+        $this->assertFileEquals('fixtures/log_error', 'logs');
     }
 
     public function testClassLoggerShouldLogWarningInFile()
@@ -68,6 +89,6 @@ class MyLoggerTest extends PHPUnit\Framework\TestCase
 
         $this->fileLog->warning($message);
 
-        $this->assertFileEquals('fixtures/log_warning.txt', 'logs.txt');
+        $this->assertFileEquals('fixtures/log_warning', 'logs');
     }
 }
